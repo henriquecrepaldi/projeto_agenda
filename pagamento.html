@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Agenda</title>
+<style>
+body { font-family: sans-serif; text-align: center; background: #f4f7f6; padding: 20px; }
+.box { background: white; padding: 20px; border-radius: 10px; display: inline-block; }
+.card { border-left: 5px solid #25D366; text-align: left; padding: 10px; margin: 10px 0; background: #fff; }
+input, select, button { width: 100%; padding: 10px; margin: 5px 0; }
+button { background: #25D366; color: white; border: none; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Agendamento</h2>
+<form action="/agendar" method="POST">
+<input type="text" name="nome" placeholder="Nome" required>
+<input type="email" name="email_cliente" placeholder="E-mail" required>
+<select name="servico">
+{% for s in servicos %}<option value="{{s.nome}}">{{s.nome}} ({{s.preco}})</option>{% endfor %}
+</select>
+<input type="datetime-local" name="horario" id="data" required>
+<button type="submit">Reservar</button>
+</form>
+<h3>Serviços</h3>
+{% for s in servicos %}
+<div class="card">
+<h4>{{s.nome}} - {{s.preco}}</h4>
+<p>{{s.resumo}}</p>
+</div>
+{% endfor %}
+</div>
+<script>document.getElementById('data').min = new Date().toISOString().slice(0, 16);</script>
+</body>
+</html>
